@@ -89,16 +89,17 @@ python zippassword.py -W prueba.txt -e secreto.zip -d salida --show-every 1
 ```
 
 ## Opciones
--o, --options : Mostrar opciones y ejemplos.
--W, --wordlist FILE : Fichero .txt con posibles contraseñas (una por línea). Se prueba antes de la fuerza bruta.
--e, --entrada FILE : Archivo comprimido de entrada (.zip o .rar).
--d, --dest DIR : Carpeta de destino para extracción (por defecto: .).
--lm, --lower : Incluir letras minúsculas a‑z en el charset.
--lM, --upper : Incluir letras MAYÚSCULAS A‑Z.
--n, --numbers : Incluir números 0‑9.
--s, --special : Incluir caracteres especiales (punctuation).
--c, --custom STR : Charset personalizado (si se usa ignora las anteriores).
--L, --length N : Longitud exacta a probar (obligatorio para fuerza bruta).
---show-every N : Actualizar consola cada N intentos (por defecto 200).
--v, --verbose : Salida más detallada.
+- -o, --options : Mostrar opciones y ejemplos.
+- -W, --wordlist FILE : Fichero .txt con posibles contraseñas (una por línea). Se prueba antes de la fuerza bruta.
+- -e, --entrada FILE : Archivo comprimido de entrada (.zip o .rar).
+- -d, --dest DIR : Carpeta de destino para extracción (por defecto: .).
+- -lm, --lower : Incluir letras minúsculas a‑z en el charset.
+- -lM, --upper : Incluir letras MAYÚSCULAS A‑Z.
+- -n, --numbers : Incluir números 0‑9.
+- -s, --special : Incluir caracteres especiales (punctuation).
+- -c, --custom STR : Charset personalizado (si se usa ignora las anteriores).
+- -L, --length N : Longitud exacta a probar (obligatorio para fuerza bruta).
+- --show-every N : Actualizar consola cada N intentos (por defecto 200).
+- -v, --verbose : Salida más detallada.
+
 
