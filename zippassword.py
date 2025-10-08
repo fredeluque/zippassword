@@ -31,14 +31,18 @@ from datetime import timedelta
 # ---------------------------
 # ASCII HEADER (bonito)
 # ---------------------------
-ASCII_HEADER = r"""
-  ______  _  ______                       _               
- |___  / | |/ / ___|  ___  ___  ___  ___ | |__   ___ _ __ 
-    / /  | ' / |  _  / __|/ _ \/ __|/ _ \| '_ \ / _ \ '__|
-   / /_  | . \ |_| | \__ \  __/\__ \ (_) | |_) |  __/ |   
-  /____| |_|\_\____| |___/\___||___/\___/|_.__/ \___|_|   
-                                                         
-    Descompresor por Fuerza Bruta — Uso responsable
+ASCII_HEADER = """
+\033[32m  ___________ _____   _____ _____            _____ _  ________ _____  
+ |___  /_   _|  __ \ / ____|  __ \     /\   / ____| |/ /  ____|  __ \ 
+    / /  | | | |__) | |    | |__) |   /  \ | |    | ' /| |__  | |__) |
+   / /   | | |  ___/| |    |  _  /   / /\ \| |    |  < |  __| |  _  / 
+  / /__ _| |_| |    | |____| | \ \  / ____ \ |____| . \| |____| | \ \ 
+ /_____|_____|_|     \_____|_|  \_\/_/    \_\_____|_|\_\______|_|  \_\\
+\033[0m
+\033[2m 
+  Z I P   P A S S W O R D   —  Fuerza Bruta
+  Recuperación de archivos (ZIP / RAR) — Uso responsable
+    by: @fredeluque\033[0m
 """
 
 # ---------------------------
@@ -266,4 +270,5 @@ def main():
         print(f"\nNo se obtuvo la contraseña (se probaron {human(intentos)} combinaciones).")
 
 if __name__ == "__main__":
+
     main()
