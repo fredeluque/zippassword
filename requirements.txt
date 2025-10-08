@@ -1,0 +1,1 @@
+rarfile>=4.0  # opcional — necesario solo si quieres soportar RAR (y tener unrar instalado)

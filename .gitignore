@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+.envrc
+.DS_Store
+.idea/
+.vscode/
+*.zip
+*.rar
+# evita subir archivos comprimidos con datos sensibles
