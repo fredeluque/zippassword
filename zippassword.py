@@ -5,7 +5,7 @@
 zippassword.py
 Brute-force extractor for ZIP/RAR from terminal.
 Usage examples:
-  ./zippassword.py -o                    # muestra opciones / ayuda breve
+  ./zippassword.py -o
   ./zippassword.py -lm -lM -n -s -e file.zip -d outdir -L 4
   ./zippassword.py --lower --upper --numbers --special --entrada file.zip --dest outdir --length 4
 """
@@ -28,9 +28,6 @@ except Exception:
 import string
 from datetime import timedelta
 
-# ---------------------------
-# ASCII HEADER (bonito)
-# ---------------------------
 ASCII_HEADER = """
 \033[32m  ___________ _____   _____ _____            _____ _  ________ _____  
  |___  /_   _|  __ \ / ____|  __ \     /\   / ____| |/ /  ____|  __ \ 
@@ -68,7 +65,6 @@ def try_extract(archivo, destino, clave):
     try:
         if archivo.lower().endswith(".zip"):
             with zipfile.ZipFile(archivo) as zf:
-                # zipfile necesita bytes para pwd
                 zf.extractall(destino, pwd=clave.encode('utf-8'))
             return True
         elif archivo.lower().endswith(".rar"):
@@ -92,7 +88,6 @@ def brute_force(archivo, destino, charset, length, stop_event, show_every=200):
     last_time = start
     samples_per_sec = 0.0
 
-    # early check: avoid extremely grandes sin confirmación (solo advertencia)
     if total > 100_000_000:
         print("⚠️  Atención: el número total de combinaciones es muy grande. Esto puede tardar muchísimo.")
         print("    (Presiona Ctrl+C para cancelar)\n")
@@ -106,7 +101,6 @@ def brute_force(archivo, destino, charset, length, stop_event, show_every=200):
             clave = "".join(combo)
             tried += 1
 
-            # medir velocidad cada cierto número
             if tried % show_every == 0 or tried == 1:
                 now = time.time()
                 elapsed = now - start
@@ -116,7 +110,6 @@ def brute_force(archivo, destino, charset, length, stop_event, show_every=200):
                 pct = (tried / total) * 100
                 print(f"\rProbadas: {human(tried)} / {human(total)} ({pct:.2f}%) | {samples_per_sec:.1f} pwd/s | ETA {format_td(eta)} | último: {clave}", end="", flush=True)
 
-            # intentar extracción
             if try_extract(archivo, destino, clave):
                 elapsed = time.time() - start
                 print("\n\n✅ ¡Contraseña encontrada!")
@@ -132,16 +125,12 @@ def brute_force(archivo, destino, charset, length, stop_event, show_every=200):
         print("\n\n✋ Interrupción por teclado (Ctrl+C). Finalizando...")
         return None, tried
 
-# ---------------------------
-# CLI / Main
-# ---------------------------
 def build_argparser():
     p = argparse.ArgumentParser(
         prog="zippassword.py",
         description="Herramienta de fuerza bruta para extraer ZIP/RAR (uso responsable)."
     )
 
-    # Options flags inspired by your sample: -lm (letras minusculas), -lM (letras Mayúsculas), -n (números), -s (especiales), -o (show options)
     p.add_argument("-o", "--options", action="store_true",
                    help="Mostrar lista de opciones disponibles y ejemplos.")
     p.add_argument("-lm", "--lower", action="store_true",
@@ -192,12 +181,10 @@ def main():
     parser = build_argparser()
     args = parser.parse_args()
 
-    # if user asked to see options
     if args.options and not args.entrada:
         print_options_and_examples()
         return
 
-    # If no entrada provided, print help (or options) and exit
     if not args.entrada:
         parser.print_help()
         print("\nEjemplo rápido: ./zippassword.py -lm -n -e fichero.zip -d ./out -L 4\n")
@@ -217,7 +204,6 @@ def main():
             print(f"Error creando directorio destino: {e}")
             sys.exit(1)
 
-    # Construir charset
     if args.custom:
         charset = args.custom
     else:
@@ -246,17 +232,14 @@ def main():
     print(f"Charset ({len(charset)}): {charset if args.verbose else ''.join(sorted(set(charset)))}")
     print(f"Longitud: {length}  => Total combinaciones: {human(total)}\n")
 
-    # Warn about rar availability
     if archivo.lower().endswith(".rar") and not RAR_AVAILABLE:
         print("⚠️  Archivo RAR detectado pero la librería 'rarfile' no está disponible o no se puede usar.")
         print("    Instala 'pip install rarfile' y asegúrate de tener 'unrar' o 'rar' en PATH.")
         print("    Abortando.")
         sys.exit(1)
 
-    # Safety/legal note
     print("Nota: Asegúrate de tener permiso para acceder a este archivo. No uses esta herramienta de forma ilegal.\n")
 
-    # confirm if very big?
     if total > 10_000_000:
         print("AVISO: el espacio de búsqueda es muy grande y puede tardar MUCHO tiempo.")
         print("Puedes cancelar en cualquier momento con Ctrl+C.\n")
@@ -272,3 +255,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
